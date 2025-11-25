@@ -212,9 +212,26 @@ Some nice Theorems:
 - Every strategy discussed for Player 2 has also been perspective, so we also
   have $cal(P)$ is nonempty iff Player 1 $(P, P)$-almost wins.
 
-= Perspective $"ATL"^*$ Model Checking
+= Conclusion
 
-== Perspective $"ATL"^*$ 
+== Memoryless Strategies
+
+- Let $cal(G) = chevron G, L chevron.r$ be a game. Deciding whether Player 1
+  has a winning memoryless strategy and finding such a strategy in $G$ is
+  $"PSPACE"$ complete when $L$ is given by an LTL formula and is $"NP"$-complete
+  when $L$ is given by a reachability condition or a universal parity automata.
+- When $L$ is an LTL formula $psi$, we can fix a memoryless strategy $sigma$ for
+  Player 1 and check whether the induced graph from $sigma$ satisfies $psi$ or
+  not. LTL model checking is known to be in $"PSPACE"$. The case where all
+  vertices of $G$ belong to Player 2 is exactly the LTL model checking problem,
+  thus showing the hardness of finding memoryless strategies.
+- To show that $<cal(G), cal(A)>$ is in NP, we can do something similar and guess
+  memoryless strategies for Player 1. We can check a guessed strategy by
+  checking for the non emptiness of the intersection of the induced subgraph
+  with the complement of $cal(A)$. The hardness of the problem is obtained via
+  reduction from 2DP.
+
+== Perspective $"ATL"^*$ Model Checking
 
 $"ATL"^*$ is an extension of the logic $"CTL"^*$ which captures the existence
 of strategies in a game. Perspective-$"ATL"^*$ lets us quantify over
@@ -237,25 +254,45 @@ psi, ::=, phi,|, not psi ,|, psi or psi,|, circle psi,|, psi cal(U) psi
 )
 $
 
+== Perspective $"ATL"^*$ Model Checking
+
 There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which
 simplifies $"ATL"^*$ by forcing all path operators to be preceded by path
 quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not
 allowed.
-
-== Model Checking
-
-Model Checking is the problem of verifying if a given model $M$ satisfies a given formula $phi$.
-
+ 
 #rule[
 The model checking problem for $"Perspective-ATL"^*$ is $"2-EXPTIME-complete"$.
 The model checking problem for $"Perspective-ATL"$ is $"PTIME-complete"$.
 ]
 
-= Conclusion
+== Structural Winning Condition
+
+- The games which admit memoryless strategies (Büchi, Parity, etc) admit
+  P-strategies as well because memoryless strategies are also P-strategies.
+- Generalised Büchi games admit P-strategies. Let $G = chevron V_1, V_2, v_0,
+  E, alpha chevron.r$ be a game with a generalised Büchi winning condition. We
+  denote by $G^v$ the game graph obtained by changing the initial vertex to $v$.
+  Let $alpha = {alpha_1, ..., alpha_k}$
+- Let $f_1$ be a winning $F$-strategy for Player 1 in $cal(G)$ and let $U
+  subset.eq V$ be the set of vertices that are reachable when Player 1 plays
+  according to $f_1$. $f_1$ will also be winning in $chevron G^v, alpha
+  chevron.r$ for every $v in U$.
+- For every $1 <= i <= k$ and $v in U$, $f_1$ induces a winning strategy for
+  Player 1 in the Büchi game on $G^v$ with objective $alpha_i inter U$
 
 == Structural Winning Condition
 
-== Memoryless Strategies
+- Use the following $P$-strategy for Player 1: Start with $i = 1$, play
+  according to the memoryless strategy of $<G^v, alpha_i inter U>$ while
+  maintaining a counter which is increased every time the play visits $V_1$.
+  When the counter is at least $n$ and the play reaches a vertex $v$ in $U
+  inter V_1$, Player 1 resets the counter and increases $i$ to $i + 1 mod k$
+  and starts playing the memoryless strategy of the new Büchi game $chevron
+  G^v, alpha_i inter U chevron.r$
+- In $n$ steps the play is guaranteed to reach a vertex in $alpha_i$, so before
+  incrementing $i$, we always visit $alpha_i$. This way each set in $alpha$ is
+  visited infinitely often.
 
 == Thank You!
 
