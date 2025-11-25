@@ -110,9 +110,43 @@ Some nice Theorems:
   in $|G|$ and doubly exponential in $|psi|$.
 ]
 
-== Alternating Tree Automata
+== Outline for Upper Bound
 
-== Upper Bound
+#v(2cm)
+
+- Perform a polynomial conversion from winning condition $cal(U)$ to an alternating tree automaton $cal(A_G)$.
+- Show that finding a $P$-strategy for Player 1 is equivalent to finding an accepting run in $cal(A_G)$.
+- Solving the emptiness problem for $cal(A_G)$ gives an upper bound for finding Player 1 $P$-strategy.
+
+== Tree Automata
+
+A Tree Automata is given by the following tuple
+$
+cal(A) = chevron Sigma, Q, q_"in", delta, alpha chevron.r
+$
+where
+- $alpha subset.eq Q^omega$ is the winning condition.
+- $delta: Q times Sigma -> Q^*$ gives the list of locations corresponding to children of the tree.
+- $Sigma$ is set of labels for the nodes of the tree.
+  
+A run of the automata on a tree $T$ can be through as wapping the tree along the edges of the automata. It can be given as a function $r:T->Q$ such that.
+- $r("root"_T)=q_"in"$
+- If $v$ is a node labelled by $a$ with children $v_1,v_2...v_n$ such that $r(v)=q$. Let $delta(q, a) = q_1,q_2...q_n$ we have $r(v_i)=q_i$.
+  
+#rule[
+#v(2cm)
+#align(center, "Add Diagram")
+#v(2cm)
+]
+
+Non-deterministic and Universal tree automata transitions return a list of words. Both of these can be combined and represented uniquely by descriving an alternating tree automata where the transitions have the type:
+$
+delta : Q times Sigma -> cal(B)(Q times D)
+$
+Where $cal(B)(Q times D)$ are positive boolean formulas. Note that runs of ATAs can be over more than 1 trees. One would pick a set nodes, and directions for edge labels.
+
+== Upper Bound (Parity Automata)
+Consider a universal parity automata $cal U$
 
 == Lower Bound
 
@@ -150,15 +184,13 @@ Model Checking is the problem of verifying if a given model $M$ satisfies a give
 The model checking problem for $"perspective-ATL"^*$ is $"2-EXPTIME-complete"$. The model checking problem for $"perspective-ATL"$ is $"PTIME-complete"$.
 ]
 
-= Other Fun Stuff
+= Conclusion
 
 == Probabalistic Setting
 
 == Structural Winning Condition
 
 == Memoryless Strategies
-
-= Thank You!
 
 == Thank You!
 
