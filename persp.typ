@@ -81,7 +81,7 @@ $
 cal(P)_(g_1,g_2)(L) = [| rho" is in "L | rho "is generated using "g_1, g_2|]
 $
 
-A strategy $sigma$ is almost winning for player 1 if for every strategy $tau$ we have $cal(P)_(g_1,g_2)(L)=1$.
+A strategy $sigma$ is #purp[almost winning] for player 1 if for every strategy $tau$ we have $cal(P)_(g_1,g_2)(L)=1$.
 
 Some nice Theorems:
 #rule[
@@ -106,8 +106,33 @@ Some nice Theorems:
 = Perspective $"ATL"^*$ Model Checking
 
 == Perspective $"ATL"^*$ 
+$"ATL"^*$ is an extension of the logic $"CTL"^*$ which captures the existence of strategies in a game. Perspective-$"ATL"^*$ lets us quantify over perspective startegies. 
+
+There are 2 types of formulas
+- State formulas $phi$
+  
+#set math.mat(delim: none)
+$
+mat(
+phi, ::=, "AP",|, not phi ,|, phi or phi,|,angle.l.double S angle.r.double psi,|,angle.l.double S angle.r.double_p psi
+)
+$
+
+- And there are path formulas $psi$
+$
+mat(
+psi, ::=, phi,|, not psi ,|, psi or psi,|, circle psi,|, psi cal(U) psi
+)
+$
+
+There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which simplifies $"ATL"^*$ by forcing all path operators to be preceeded by path quantifiers. eg $angle.l.double 1 angle.r.double circle circle p$ is not allowed.
 
 == Model Checking
+Model Checking is the problem of verifying if a given model $M$ satisfies a given formula $phi$.
+
+#rule[
+The model checking problem for $"perspective-ATL"^*$ is $"2-EXPTIME-complete"$. The model checking problem for $"perspective-ATL"$ is $"PTIME-complete"$.
+]
 
 = Other Fun Stuff
 
