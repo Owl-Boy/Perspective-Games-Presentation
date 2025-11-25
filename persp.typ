@@ -146,11 +146,60 @@ $
 Where $cal(B)(Q times D)$ are positive boolean formulas. Note that runs of ATAs can be over more than 1 trees. One would pick a set nodes, and directions for edge labels.
 
 == Upper Bound (Parity Automata)
-Consider a universal parity automata $cal U$
+We can think of a strategy as a tree. For player 1, if a play is in $V_1$ we choose one vertex as its successor. If the play is in $V_2$, then the control can go back to player 1 in multiple ways. This is how we interpret a strategy as a tree.
 
-== Lower Bound
+Thus, for our tree automata, we will simulate strategies on the game:
+- $Q' = V times Q times [1..n]$
+- $q_0'= chevron v_0, q_0, 0 chevron.r$
+
+If the game was in configuration $(v, q)$ such that $v in V_1$ and player 1 chooses to go to $v'$.
+- Let $S_(v, q)^v'$ be $bot$ if from $v' in V_2$ player 2 can force the game in $v_2$ and win.
+- Let $S_(v, q)^v'$ be all such $(v'', q', i)$ where player 2 can take the game from $v'$ to $v''$, $q'$ is the vertex in the word-automata reached after following the path, and $i$ is the highest priority seen along the path.
+
+We now define the edges to be:
+- From $(v, q, i)$ if $S_(v, q)^v'= bot$ or there is no edge from $v$ to $v'$ the transision is $(v, q, i)$ on reading $v'$ goes to $"fail"$.
+- Otherwise $(v, q, i)$  on reading $v'$ goes to all vertices $(v'', q', i')$ in $S_(v, q)^v'$ for vertex $v''$, if the set is empty, we accept the run.
+  
+Our winning condition is again parity, an for any vertex $(v, q, i)$ we define its parity to be $i$.
+
+We then have the following theorem:
+#rule[
+Given a game $cal(G)= chevron G, cal(U) chevron.r$ where $cal(U)$ is a universal parity tree game, we can convert it to a equivalent non-deterministic Rabin tree game and find a witness in time polynomial to $|G|$ and exponential to $|cal(U)|$. Furthermore, we can make a transducer to extract a witness.
+]
+
+== Lower Bound (Reachability)
+
+We show a reduction from membership for linear bounded alternating turing machines. We assuming the automata alternates between existential and universal nodes.
+
+Given such a machine $M$ along with a word $w$, we know the size of the tape required, so we know the size of the configuration. Both players will take turns picking transitions of the from $Q times Gamma -> Q times Gamma times {L, R}$ that the machine will take. Player 1 will have a winning strategy iff $M$ accepts $w$.
+
+Since the number of configurations is exponential in size of the word, we will only keep track of one specific position in the tape during the game.
+
+Since the entire information of the tape is not kept track of, both players need simulate the turing machine. We punish player 1 if the simulation is not faithful, and we give her the power to force player 2 to play correctly.
+
+The game proceeds by:
+- Player 2 selecting a cell of the tape on which transitions will be verified.
+- Player 1 does not know what cell player 2 selected, so she must play safely by remembering the tape content correctly.
+- Player 1 takes her turn in 2 steps
+    - she picks a transition $q_"in", gamma ->q', gamma', d$ and claims tape symbol was $gamma$.
+    - She claims that the tape content under the head now, is $lambda$.
+- For player 2, the machine is in state $q'$ and player 1 said the current tape letter is $lambda$, so she must take a transition of the form $q', lambda -> q'', gamma'', d'$
+- This process repeats with player 1 taking a transition from whatever state the turing machine is in.
+- The run is accepted if the machine reaches the accept state.
+  
+This is a polynomial time reduction, this we have proved the $"EXPTIME"$-hardness.
 
 == LTL Winning Condition
+
+For a game $cal(G)= chevron G, psi chevron.r$
+- Build Buchi Automata that satisfies $not psi$. Construction is exponential.
+- Dualize to get a universal co-Buchi Automata, which is also a parity automata.
+- Use the previous algorith, which is exponential in the size of the automaton.
+This proves the upper bound.
+
+The proof for the lower bound reduces the realizablity problem for an $"LTL"$ formula $psi$ to a game $cal(G)=(G, psi)$. Finding an $F$ strategy is known to be $"2-EXPTIME"$-complete.
+
+The states of $G$ are 2 copies of $2^"AP"$, one for player 1 and 1 for player 2, and all transitions are of the from $V_1$ to $V_2$ or $V_2$ to $V_1$. Here, finding a $P$-strategy is equivalent to finding an $F$-startegy as vertices alternate.
 
 = Perspective $"ATL"^*$ Model Checking
 
