@@ -44,7 +44,7 @@ Winning condition $L$ decides which runs are winning, given as one of the follow
   
 Thus $L subset.eq (2^"AP")^omega$.
 
-== Perspective Strategies
+== Perspective Strategies 
 Given a game graph $G$, let the set of all finite runs on it be defined as $V^ast.op.o$.
 
 Given a finite run $rho$, we define $pi_p:V^ast.op.o ->V_p^ast$ as the projection map, which drops all vertices in the run not belonging to player $p$.
@@ -81,6 +81,7 @@ Some nice theorems:
 
 == Results
 
+#v(1cm)
 #rule[
   Deciding whether Player 1 $P$-wins and finding a $P$-strategy in a
   perspective game $chevron G, cal(U) chevron.r$ is $"EXPTIME"$-complete
@@ -88,6 +89,7 @@ Some nice theorems:
   condition. The problem can be solved in time polynomial in $|G|$ and
   exponential in $|cal(U)|$.
 ]
+#v(1cm)
 
 #rule[
   Deciding whether Player 1 $P$-wins and finding a $P$-strategy in a
@@ -119,11 +121,7 @@ A run of the automata on a tree $T$ can be through as wapping the tree along the
 - $r("root"_T)=q_"in"$
 - If $v$ is a node labelled by $a$ with children $v_1,v_2...v_n$ such that $r(v)=q$. Let $delta(q, a) = q_1,q_2...q_n$ we have $r(v_i)=q_i$.
   
-#rule[
-#v(2cm)
-#align(center, "Add Diagram")
-#v(2cm)
-]
+#align(center, image("img/tree_aut.png", height: 40%))
 
 Non-deterministic and Universal tree automata transitions return a list of words. Both of these can be combined and represented uniquely by descriving an alternating tree automata where the transitions have the type:
 $
@@ -230,11 +228,12 @@ Some nice Theorems:
 
 == Undecidability
 
-#image("img/prob_reduction.png")
+#image("img/chart.jpg")
 
 == Undecidability
 
-- We create $cal(G)$ with a game graph that looks like the above. A play in
+#v(1cm)
+- We create $cal(G)$ with a game graph that follows the above process. A play in
   $G$ is an infinite sequence of rounds, such that in each round Player 1
   chooses $sigma in Sigma$, Player 2 chooses an index $i in {0, ... n - 1}$
   and then Player 1 chooses an index $j in {0 ... n - 1}$
@@ -303,17 +302,23 @@ psi, ::=, phi,|, not psi ,|, psi or psi,|, circle psi,|, psi cal(U) psi
 )
 $
 
-== Perspective $"ATL"^*$ Model Checking
-
 There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which
 simplifies $"ATL"^*$ by forcing all path operators to be preceded by path
-quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not
-allowed.
+quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not allowed.
+
+== Perspective $"ATL"^*$ Model Checking
+
  
 #rule[
 The model checking problem for $"Perspective-ATL"^*$ is $"2-EXPTIME-complete"$.
 The model checking problem for $"Perspective-ATL"$ is $"PTIME-complete"$.
 ]
+
+For $"Perpsective-ATL"^*$, model checking can involve finding a winning strategy for player 1, this by the results in section 2, we get $"2-EXPTIME"$-hardness.
+
+For the lower bound, proof is similar to finding lower bound for $"CTL"^*$,given a formula $psi$ we see which states satisfy which subformula of $psi$, The only difference is when we see path quantifiers, where we use algorithms discussed in the previous section, which fit the time complexity.
+
+For $"Perspective-ATL"$, we have that the path quantifiers $chevron.double S chevron.r.double_P$ is equivalent to $chevron.double S chevron.r.double$ for all temporal operators, it can be solved with the same complexity.
 
 == Structural Winning Condition
 
@@ -343,8 +348,15 @@ The model checking problem for $"Perspective-ATL"$ is $"PTIME-complete"$.
   incrementing $i$, we always visit $alpha_i$. This way each set in $alpha$ is
   visited infinitely often.
 
+
 == Thank You!
+#import "@preview/tiaoma:0.3.0"
 
 Thank you for attending our presentation. If you are interested in reading the paper, it can be found here:
 
-#figure(image("img/paper_qr_code.png", width: 30%), caption: [https://dl.acm.org/doi/10.1145/3627705], numbering: none)
+
+#figure(tiaoma.barcode(
+  "https://dl.acm.org/doi/10.1145/3627705", 
+  "QRCode", 
+  options : (scale : 5.0)
+), caption: link("https://dl.acm.org/doi/10.1145/3627705"), numbering: none) 
