@@ -60,7 +60,11 @@ $
 
 We consider games where each player can have a different kind of strategy,eg. in a $"PF"$-game, player 1 has a perspective strategy and player 2 has an ordinary (or full) strategy.
 
-== Deterministic Setting
+
+= Deterministic Setting Analysis
+
+== Introduction
+
 We say that a strategy $sigma$ is #purp[winning] for player 1, if for any strategy $tau$ for player 2, the play induced by the strategies satisfies the winning condition. 
 
 #linebreak()
@@ -74,24 +78,6 @@ Some nice theorems:
 
 - Perspective Games are not determined.
 ]
-
-== Probabalistic Setting
-A probabalistic strategy for player $i$ is a function $V^ast.op.o V_i -> cal(D)(V)$, where $cal(D)(V)$ is the set of probability distributions on $V$. Given strategies $g_1$ and $g_2$ for both players we define
-$
-cal(P)_(g_1,g_2)(L) = [| rho" is in "L | rho "is generated using "g_1, g_2|]
-$
-
-A strategy $sigma$ is #purp[almost winning] for player 1 if for every strategy $tau$ we have $cal(P)_(g_1,g_2)(L)=1$.
-
-Some nice Theorems:
-#rule[
-- There is a game $cal(G)$ that is $"PF"$-almost winning for player 1, but not $P$-winning.
-- There is a game $cal(G)$ that is $"PP"$-almost winning but not $"PF"$-almost winning for player 1.
-- Perspective games are not almost-determined.
-]
-
-
-= Deterministic Setting Analysis
 
 == Results
 
@@ -152,10 +138,87 @@ Consider a universal parity automata $cal U$
 
 == LTL Winning Condition
 
+= Probabilistic Setting
+
+== Introduction
+
+A probabalistic strategy for player $i$ is a function $V^ast.op.o V_i -> cal(D)(V)$, where $cal(D)(V)$ is the set of probability distributions on $V$. Given strategies $g_1$ and $g_2$ for both players we define
+$
+cal(P)_(g_1,g_2)(L) = [| rho" is in "L | rho "is generated using "g_1, g_2|]
+$
+
+A strategy $sigma$ is #purp[almost winning] for player 1 if for every strategy $tau$ we have $cal(P)_(g_1,g_2)(L)=1$.
+
+Some nice Theorems:
+#rule[
+- There is a game $cal(G)$ that is $"PF"$-almost winning for player 1, but not $P$-winning.
+- There is a game $cal(G)$ that is $"PP"$-almost winning but not $"PF"$-almost winning for player 1.
+- Perspective games are not almost-determined.
+]
+
+== Undecidability
+
+#rule[
+  Deciding whether Player 1 $(P, F)$-almost wins and whether they $(P,
+  P)$-almost win a perspective game with a deterministic co-Büchi condition
+  is undecidable.
+]
+
+- This can be shown by reduction from emptiness problem of a simplified
+  probabilistic co-Büchi automata (PCW) which has already been proved to be
+  undecidable.
+- A simplified PCW is $cal(P) = chevron Sigma, Q, q_0, delta, alpha chevron.r$
+  with the transition function $delta: Q times Sigma -> chevron q_1, ..., q_n
+  chevron.r$, where $delta(q, sigma)$ is the tuple of states that the automata
+  can transition to, each with $1/n$ probability.
+  A word $w in Sigma^w$ is accepted by $cal(P)$ if the acceptance probability
+  of $w$ in $cal(P)$ (denoted $"Prp"(w)$) is $1$.
+- We construct a game $cal(G) = chevron G, cal(A) chevron.r$, where $cal(A)$
+  is a deterministic co-Büchi automata such that $cal(P)$ is nonempty iff
+  Player 1 $(P, F)$-almost wins $cal(G)$. Intuitively, the probabilistic
+  transitions of $cal(P)$ are simulated by randomized strategies of players
+  in $cal(G)$.
+
+== Undecidability
+
+#image("img/prob_reduction.png")
+
+== Undecidability
+
+- We create $cal(G)$ with a game graph that looks like the above. A play in
+  $G$ is an infinite sequence of rounds, such that in each round Player 1
+  chooses $sigma in Sigma$, Player 2 chooses an index $i in {0, ... n - 1}$
+  and then Player 1 chooses an index $j in {0 ... n - 1}$
+- Since Player 1 only has perspective visibility, the chose of $i$ and $j$
+  are independent. So, each player in $cal(G)$ has the possibility to
+  ensure exact simulation of the probabilistic transitions of $cal(P)$
+  by choosing transitions to the ${0, ..., n - 1}$ vertices in $G$ uniformly
+  at random. If Player 2 chooses $i$ uniformly at random and then Player 1
+  chooses $j$ without knowing $i$, the index $(i + j) mod n$ is
+  distributed uniformly in ${0,..., n - 1}$.
+
+== Undecidability
+
+- If $cal(P)$ is nonempty and $w in L(cal(P))$, let $g_1$ be a randomized
+  $P$-strategy of Player 1. Since for every random choice of Player 2 the
+  index $(i + j) mod n$ is distributed uniformly, we have for every randomized
+  strategy $g_2$ of Player 2, $"Pr"_(g_1, g_2)(L(cal(A))) = "Prp"(w) = 1$
+- Assume $cal(P)$ is empty. Let $g_2$ be a randomized $P$-strategy of Player 2
+  such that $i in {0,...,n - 1}$ is chosen uniformly at random. For every
+  randomized strategy $g_1$ of Player 1, we have that $Pr_(g_1, g_2)(L(cal(A)))$
+  is the probability that $P$ accepts a word $w$ that is drawn according to
+  some distribution that is induced $g_1$. Since $"Prp"(w) < 1$ for every $w$,
+  we also have $Pr_(g_1, g_2)(L(cal(A))) < 1$
+- Every strategy discussed for Player 2 has also been perspective, so we also
+  have $cal(P)$ is nonempty iff Player 1 $(P, P)$-almost wins.
+
 = Perspective $"ATL"^*$ Model Checking
 
 == Perspective $"ATL"^*$ 
-$"ATL"^*$ is an extension of the logic $"CTL"^*$ which captures the existence of strategies in a game. Perspective-$"ATL"^*$ lets us quantify over perspective startegies. 
+
+$"ATL"^*$ is an extension of the logic $"CTL"^*$ which captures the existence
+of strategies in a game. Perspective-$"ATL"^*$ lets us quantify over
+perspective strategies. 
 
 There are 2 types of formulas
 - State formulas $phi$
@@ -174,19 +237,21 @@ psi, ::=, phi,|, not psi ,|, psi or psi,|, circle psi,|, psi cal(U) psi
 )
 $
 
-There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which simplifies $"ATL"^*$ by forcing all path operators to be preceeded by path quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not allowed.
+There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which
+simplifies $"ATL"^*$ by forcing all path operators to be preceded by path
+quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not
+allowed.
 
 == Model Checking
 
 Model Checking is the problem of verifying if a given model $M$ satisfies a given formula $phi$.
 
 #rule[
-The model checking problem for $"perspective-ATL"^*$ is $"2-EXPTIME-complete"$. The model checking problem for $"perspective-ATL"$ is $"PTIME-complete"$.
+The model checking problem for $"Perspective-ATL"^*$ is $"2-EXPTIME-complete"$.
+The model checking problem for $"Perspective-ATL"$ is $"PTIME-complete"$.
 ]
 
 = Conclusion
-
-== Probabalistic Setting
 
 == Structural Winning Condition
 
