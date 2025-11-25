@@ -95,6 +95,21 @@ Some nice Theorems:
 
 == Results
 
+#rule[
+  Deciding whether Player 1 $P$-wins and finding a $P$-strategy in a
+  perspective game $chevron G, cal(U) chevron.r$ is $"EXPTIME"$-complete
+  when $cal(U)$ is a universal automata with a parity or a reachability winning
+  condition. The problem can be solved in time polynomial in $|G|$ and
+  exponential in $|cal(U)|$.
+]
+
+#rule[
+  Deciding whether Player 1 $P$-wins and finding a $P$-strategy in a
+  perspective game $chevron G, psi chevron.r$ is $"2EXPTIME"$-complete when
+  $psi$ is an LTL specification. The problem can be solved in time polynomial
+  in $|G|$ and doubly exponential in $|psi|$.
+]
+
 == Alternating Tree Automata
 
 == Upper Bound
@@ -128,6 +143,7 @@ $
 There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which simplifies $"ATL"^*$ by forcing all path operators to be preceeded by path quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not allowed.
 
 == Model Checking
+
 Model Checking is the problem of verifying if a given model $M$ satisfies a given formula $phi$.
 
 #rule[
