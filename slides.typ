@@ -50,7 +50,7 @@
 #let rule(sub: none , body ) = {
     fancy_box( 
         colour : rgb("#2159a5"), 
-        symbol : $bar.v.circle$ , 
+        symbol : $bar.v.o$ , 
         title : sub, 
         fancy_title_size : 1em , 
         label_prefix : "quote of" , 

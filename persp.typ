@@ -24,11 +24,11 @@
 - Games with concurrent moves
   
 #rule[
-#blue[Perspective Strategies] or #blue[P-strategies] are strategies, depending only on the part of the run that is within a player's domain, given by $rho:V_1^(plus.circle) -> V_1$.
+#blue[Perspective Strategies] or #blue[P-strategies] are strategies, depending only on the part of the run that is within a player's domain, given by $rho:V_1^(plus.o) -> V_1$.
 ]
 
 == Formal Description
-Game Graph $G = angle.l V_1, V_2, E, v_0, "AP", tau angle.r$
+Game Graph $G = chevron.l V_1, V_2, E, v_0, "AP", tau chevron.r$
 - $"AP"$ is a finite set of atomic propositions.
 - $tau : V_1 union.sq V_2-> 2^"AP"$ assigns which atomic propositions are true in which locations.
   
@@ -45,9 +45,9 @@ Winning condition $L$ decides which runs are winning, given as one of the follow
 Thus $L subset.eq (2^"AP")^omega$.
 
 == Perspective Strategies
-Given a game graph $G$, let the set of all finite runs on it be defined as $V^ast.circle$.
+Given a game graph $G$, let the set of all finite runs on it be defined as $V^ast.op.o$.
 
-Given a finite run $rho$, we define $pi_p:V^ast.circle ->V_p^ast$ as the projection map, which drops all vertices in the run not belonging to player $p$.
+Given a finite run $rho$, we define $pi_p:V^ast.op.o ->V_p^ast$ as the projection map, which drops all vertices in the run not belonging to player $p$.
 
 #rule[
 A #blue[Perspective strategy] $sigma_p$ for a player $p$ takes the part of a run restricted to player $p$ vertices and decides a move based on that. 
@@ -76,7 +76,7 @@ Some nice theorems:
 ]
 
 == Probabalistic Setting
-A probabalistic strategy for player $i$ is a function $V^ast.circle V_i -> cal(D)(V)$, where $cal(D)(V)$ is the set of probability distributions on $V$. Given strategies $g_1$ and $g_2$ for both players we define
+A probabalistic strategy for player $i$ is a function $V^ast.op.o V_i -> cal(D)(V)$, where $cal(D)(V)$ is the set of probability distributions on $V$. Given strategies $g_1$ and $g_2$ for both players we define
 $
 cal(P)_(g_1,g_2)(L) = [| rho" is in "L | rho "is generated using "g_1, g_2|]
 $
@@ -114,7 +114,7 @@ There are 2 types of formulas
 #set math.mat(delim: none)
 $
 mat(
-phi, ::=, "AP",|, not phi ,|, phi or phi,|,angle.l.double S angle.r.double psi,|,angle.l.double S angle.r.double_p psi
+phi, ::=, "AP",|, not phi ,|, phi or phi,|,chevron.l.double S chevron.r.double psi,|,chevron.l.double S chevron.r.double_p psi
 )
 $
 
@@ -125,7 +125,7 @@ psi, ::=, phi,|, not psi ,|, psi or psi,|, circle psi,|, psi cal(U) psi
 )
 $
 
-There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which simplifies $"ATL"^*$ by forcing all path operators to be preceeded by path quantifiers. eg $angle.l.double 1 angle.r.double circle circle p$ is not allowed.
+There is also the logic $"ATL"$ (similarly perspective-$"ATL"$), which simplifies $"ATL"^*$ by forcing all path operators to be preceeded by path quantifiers. eg $chevron.l.double 1 chevron.r.double circle circle p$ is not allowed.
 
 == Model Checking
 Model Checking is the problem of verifying if a given model $M$ satisfies a given formula $phi$.
