@@ -39,7 +39,7 @@
     )
   )
 
-  set text(size: 18pt)
+  set text(size: 20pt)
 
   user_inp
 }
