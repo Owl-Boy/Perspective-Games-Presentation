@@ -144,4 +144,8 @@ The model checking problem for $"perspective-ATL"^*$ is $"2-EXPTIME-complete"$. 
 
 = Thank You!
 
+== Thank You!
 
+Thank you for attending our presentation. If you are interested in reading the paper, it can be found here:
+
+#figure(image("img/paper_qr_code.png", width: 30%), caption: [https://dl.acm.org/doi/10.1145/3627705], numbering: none)
